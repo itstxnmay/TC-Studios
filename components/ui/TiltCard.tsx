@@ -1,6 +1,11 @@
 import React, { useRef, useState } from 'react';
 
-const TiltCard = ({ children, className }: { children: React.ReactNode, className?: string }) => {
+interface TiltCardProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+const TiltCard: React.FC<TiltCardProps> = ({ children, className }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [transform, setTransform] = useState("perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)");
 
