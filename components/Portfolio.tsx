@@ -9,12 +9,12 @@ const Portfolio = () => {
   return (
     <section id="work" className="py-20 md:py-32 px-6 relative">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-white/10 pb-8 reveal-on-scroll blur-reveal">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 border-b border-white/10 pb-8 reveal-on-scroll blur-reveal">
           <div>
             <span className="text-purple-500 font-bold tracking-widest text-xs uppercase mb-2 block">PORTFOLIO</span>
             <h2 className="text-4xl md:text-5xl font-bold text-white">Our Work</h2>
           </div>
-          <p className="text-zinc-500 mt-4 md:mt-0 text-sm max-w-xs text-right">
+          <p className="text-zinc-500 mt-4 md:mt-0 text-sm max-w-xs text-left md:text-right">
             Short-form work showcasing our approach to pacing, motion, and retention.
           </p>
         </div>
@@ -22,7 +22,7 @@ const Portfolio = () => {
         {/* Video Lightbox Modal */}
         {isVideoOpen && (
             <div 
-              className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 animate-in fade-in zoom-in-95 duration-300"
+              className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 animate-in fade-in zoom-in-95 duration-300 backdrop-blur-md"
               onClick={() => setIsVideoOpen(false)}
             >
               <button 
@@ -31,20 +31,20 @@ const Portfolio = () => {
               >
                 <X className="w-8 h-8" />
               </button>
+              
+              {/* Video Container - Optimized for all devices using max-dimensions and aspect ratio */}
               <div 
-                className="relative w-full max-w-sm md:max-w-md aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10 bg-black"
+                className="relative w-auto h-auto max-w-[90vw] max-h-[85vh] aspect-[9/16] rounded-xl overflow-hidden shadow-2xl ring-1 ring-white/10 bg-black"
                 onClick={(e) => e.stopPropagation()} 
               >
-                 {/* Logo Hiding Overlay */}
-                 <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-black to-transparent z-50 pointer-events-none"></div>
-
                  <iframe 
-                    src="https://streamable.com/e/wm1d8v?autoplay=1&muted=0"
+                    src="https://streamable.com/e/wm1d8v?autoplay=1&muted=0&playsinline=1"
                     width="100%" 
                     height="100%" 
                     frameBorder="0" 
                     allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full"
+                    style={{ background: '#000' }}
                 ></iframe>
               </div>
             </div>
@@ -58,7 +58,7 @@ const Portfolio = () => {
           <div 
             className="relative w-full max-w-sm aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 shadow-2xl transition-transform duration-300 group-hover:scale-105 bg-black"
           >
-             {/* Logo Hiding Overlay for Preview - No text, just gradient */}
+             {/* Logo Hiding Overlay for Preview Only */}
              <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-black to-transparent z-20 pointer-events-none"></div>
 
              <iframe 
