@@ -247,15 +247,18 @@ const Pricing = () => {
                         Book Strategy Call <ArrowRight className="w-4 h-4" />
                     </button>
                 </div>
-                <div className="h-full min-h-[200px] bg-black/50 rounded-2xl border border-white/5 flex items-center justify-center p-8 relative overflow-hidden group">
+                <button 
+                     onClick={handleStrategyCall}
+                     className="h-full min-h-[200px] w-full bg-black/50 hover:bg-zinc-800/50 transition-colors rounded-2xl border border-white/5 flex items-center justify-center p-8 relative overflow-hidden group cursor-pointer"
+                >
                      {/* Abstract decorative graphic */}
                      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-soft-light" />
                      <div className="text-center">
-                        <Phone className="w-12 h-12 text-zinc-600 mx-auto mb-4 group-hover:text-cyan-400 transition-colors" />
+                        <Phone className="w-12 h-12 text-zinc-600 mx-auto mb-4 group-hover:text-cyan-400 transition-colors duration-300" />
                         <div className="text-lg font-bold text-white">Let's Negotiate</div>
                         <div className="text-zinc-500 text-sm">We are open to custom offers.</div>
                      </div>
-                </div>
+                </button>
             </div>
         </div>
 

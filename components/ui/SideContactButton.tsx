@@ -1,29 +1,52 @@
-import React from 'react';
-import { Mail, Briefcase } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Mail } from 'lucide-react';
 
 const SideContactButton = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  
   const email = "official.tcstudios@gmail.com";
-  const subject = encodeURIComponent("Corporate Inquiry: Partnership Proposal");
+  // Updated subject and body as per request
+  const subject = encodeURIComponent("Project Inquiry: High-CTR Thumbnail");
   const body = encodeURIComponent(`Hi TC Studios,
 
-I represent a company/agency and would like to discuss a formal partnership or bulk retainer.
+I need a premium thumbnail for my upcoming video.
 
-Company Name:
-Website (if applicable):
-Project Scope:
+Video Topic / Title: [Type here]
+Style Wanted: [e.g., Documentary, Finance, Mr Beast Style]
 
-Regards,`);
+Let's discuss the concept.`);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const pricingSection = document.getElementById('pricing');
+      if (pricingSection) {
+        const rect = pricingSection.getBoundingClientRect();
+        // Show button when Pricing section starts entering the viewport (scrolled past thumbnails)
+        // using window.innerHeight * 0.8 triggers it slightly before it's fully top-aligned for better UX
+        setIsVisible(rect.top < window.innerHeight * 0.8);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <>
         {/* 
-            Hidden on Mobile (< md) to prevent blocking content. 
-            Visible on Tablet/Desktop (>= md).
+            Hidden on Mobile (< md). 
+            Visible on Tablet/Desktop (>= md) ONLY when pricing section is reached.
+            Positioned on the RIGHT side.
         */}
         <a
         href={`mailto:${email}?subject=${subject}&body=${body}`}
-        className="fixed z-50 right-0 top-1/2 -translate-y-1/2 group hidden md:flex"
-        aria-label="Corporate Email Inquiry"
+        className={`fixed z-50 right-0 top-1/2 -translate-y-1/2 group hidden md:flex transition-all duration-500 ease-out transform ${
+            isVisible 
+                ? 'translate-x-0 opacity-40 hover:opacity-100' 
+                : 'translate-x-full opacity-0 pointer-events-none'
+        }`}
+        aria-label="Email Inquiry"
         >
             <div className="
                 relative flex flex-col items-center gap-4 py-6 px-3 

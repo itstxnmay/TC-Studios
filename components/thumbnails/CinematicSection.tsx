@@ -42,7 +42,7 @@ const CinematicSection = () => {
                 desc: "Optimized for mass appeal. High-Saturation and Hyper-Expression create competitive tension."
             },
             tc: {
-                image: "https://iili.io/fs9Wqb4.png",
+                image: "https://i.postimg.cc/x16p0b3S/Survived-100-days-in-prison-final.png",
                 title: "The \"Cinematic Narrative\" Engine",
                 desc: "Optimized for retention. Atmospheric Lighting and Environmental Storytelling create immersion."
             }
