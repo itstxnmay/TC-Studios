@@ -28,10 +28,11 @@ const Navigation = () => {
   }, [mobileMenuOpen]);
 
   const navLinks = [
-    { name: "Our Systems", href: "#services" },
-    { name: "Portfolio", href: "#work" },
-    { name: "About Us", href: "#about" },
-    { name: "Contact Us", href: "#contact" },
+    { name: "Thumbnails", href: "#thumbnails" },
+    { name: "Video Work", href: "#video-editing" },
+    { name: "Pricing", href: "#pricing" },
+    { name: "About", href: "#about" },
+    { name: "Contact", href: "#contact" },
   ];
 
   return (
@@ -39,16 +40,16 @@ const Navigation = () => {
       {/* Scroll Progress Bar */}
       <div className="fixed top-0 left-0 h-1 z-[100] w-full pointer-events-none">
         <div 
-          className="h-full bg-gradient-to-r from-purple-500 via-indigo-500 to-purple-500 transition-all duration-150 ease-out"
+          className="h-full bg-gradient-to-r from-cyan-400 via-purple-500 to-cyan-400 transition-all duration-150 ease-out"
           style={{ width: `${scrollProgress * 100}%` }}
         />
       </div>
 
       <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out ${scrolled ? 'bg-black/80 backdrop-blur-xl py-4 border-b border-white/5' : 'bg-transparent py-6'}`}>
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <div className="text-2xl font-bold tracking-widest text-white uppercase z-50 hover:scale-105 transition-transform cursor-pointer">
+          <a href="#" className="text-2xl font-bold tracking-widest text-white uppercase z-50 hover:scale-105 transition-transform cursor-pointer">
             TC Studios
-          </div>
+          </a>
           
           {/* Desktop Nav */}
           <div className="hidden md:flex space-x-10">
@@ -59,7 +60,7 @@ const Navigation = () => {
                 className="relative text-xs font-bold text-gray-400 hover:text-white transition-colors tracking-[0.2em] uppercase group overflow-hidden"
               >
                 {link.name}
-                <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-gradient-to-r from-purple-500 to-indigo-500 transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
+                <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-gradient-to-r from-cyan-400 to-purple-500 transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
               </a>
             ))}
           </div>
@@ -84,7 +85,7 @@ const Navigation = () => {
                 key={link.name} 
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-2xl font-medium text-white tracking-widest uppercase hover:text-purple-500 hover:scale-110 transition-all duration-300"
+                className="text-2xl font-medium text-white tracking-widest uppercase hover:text-cyan-400 hover:scale-110 transition-all duration-300"
               >
                 {link.name}
               </a>

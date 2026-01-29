@@ -1,12 +1,13 @@
 import React from 'react';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
-import StatsBar from './components/StatsBar';
-import Services from './components/Services';
 import Portfolio from './components/Portfolio';
+import Thumbnails from './components/Thumbnails';
+import Pricing from './components/Pricing';
 import About from './components/About';
 import Contact from './components/Contact';
 import GlobalBackground from './components/GlobalBackground';
+import SideContactButton from './components/ui/SideContactButton';
 import { useScrollReveal } from './hooks/useAppHooks';
 
 const App = () => {
@@ -16,9 +17,13 @@ const App = () => {
     <div className="min-h-screen text-white font-sans selection:bg-purple-500 selection:text-white overflow-x-hidden">
       <GlobalBackground />
       <Navigation />
+      
+      {/* Fixed UI Elements */}
+      <SideContactButton />
+      
       <Hero />
-      <StatsBar />
-      <Services />
+      <Thumbnails />
+      <Pricing />
       <Portfolio />
       <About />
       <Contact />
@@ -28,6 +33,17 @@ const App = () => {
         /* --- UTILITIES --- */
         .will-change-transform {
           will-change: transform;
+        }
+
+        /* --- SKELETON LOADER --- */
+        @keyframes skeleton-loading {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+        .skeleton-loader {
+          background: linear-gradient(90deg, #18181b 25%, #27272a 50%, #18181b 75%);
+          background-size: 200% 100%;
+          animation: skeleton-loading 1.5s infinite ease-in-out;
         }
 
         /* --- SCROLL REVEAL --- */

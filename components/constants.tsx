@@ -4,7 +4,7 @@ import {
   Mic, 
   Zap, 
   Cpu, 
-  CheckCircle, 
+  CircleCheck, 
   Monitor, 
   Clock 
 } from 'lucide-react';
@@ -68,19 +68,14 @@ export const PROJECTS = [
   }
 ];
 
-// IMPORTANT: Ensure your images are in public/thumbnails/ named thumb-1.jpg, thumb-2.jpg, etc.
 export const THUMBNAILS = [
-  { id: 1, title: "Viral Gaming Challenge", category: "Gaming", image: "/thumbnails/thumb-1.jpg" },
-  { id: 2, title: "Tech Review: The Future", category: "Tech", image: "/thumbnails/thumb-2.jpg" },
-  { id: 3, title: "Crypto Crash Course", category: "Finance", image: "/thumbnails/thumb-3.jpg" },
-  { id: 4, title: "Vlog: Day in Life", category: "Lifestyle", image: "/thumbnails/thumb-4.jpg" },
-  { id: 5, title: "MrBeast Style Challenge", category: "Entertainment", image: "/thumbnails/thumb-5.jpg" },
-  { id: 6, title: "AI Revolution Explained", category: "Education", image: "/thumbnails/thumb-6.jpg" },
-  { id: 7, title: "Fitness Transformation", category: "Health", image: "/thumbnails/thumb-7.jpg" },
-  { id: 8, title: "Passive Income Guide", category: "Business", image: "/thumbnails/thumb-8.jpg" },
-  { id: 9, title: "Travel: Hidden Gems", category: "Travel", image: "/thumbnails/thumb-9.jpg" },
-  { id: 10, title: "Podcast Highlight", category: "Podcast", image: "/thumbnails/thumb-10.jpg" },
-  { id: 11, title: "Coding Tutorial 101", category: "Dev", image: "/thumbnails/thumb-11.jpg" }
+  { id: 5, title: "MrBeast Style Challenge", category: "Entertainment", image: "https://images.unsplash.com/photo-1598550476439-6847785fcea6?q=80&w=600&auto=format&fit=crop" },
+  { id: 6, title: "AI Revolution Explained", category: "Education", image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=600&auto=format&fit=crop" },
+  { id: 7, title: "Fitness Transformation", category: "Health", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=600&auto=format&fit=crop" },
+  { id: 8, title: "Passive Income Guide", category: "Business", image: "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?q=80&w=600&auto=format&fit=crop" },
+  { id: 9, title: "Travel: Hidden Gems", category: "Travel", image: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=600&auto=format&fit=crop" },
+  { id: 10, title: "Podcast Highlight", category: "Podcast", image: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=600&auto=format&fit=crop" },
+  { id: 11, title: "Coding Tutorial 101", category: "Dev", image: "https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=600&auto=format&fit=crop" }
 ];
 
 export const SERVICES = [
@@ -131,7 +126,7 @@ export const SERVICES = [
 ];
 
 export const STATS = [
-  { label: "On-Time Delivery", value: 100, suffix: "%", icon: <CheckCircle className="text-purple-500" /> },
+  { label: "On-Time Delivery", value: 100, suffix: "%", icon: <CircleCheck className="text-purple-500" /> },
   { label: "UHD Quality Standard", value: 4, suffix: "K", icon: <Monitor className="text-purple-500" /> },
   { label: "Response Time", value: 24, suffix: "h", icon: <Clock className="text-purple-500" /> },
 ];

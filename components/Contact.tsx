@@ -2,6 +2,17 @@ import React from 'react';
 import { Mail, Instagram, Twitter, Linkedin } from 'lucide-react';
 
 const Contact = () => {
+  const email = "official.tcstudios@gmail.com";
+  const subject = encodeURIComponent("Project Inquiry: High-CTR Thumbnail");
+  const body = encodeURIComponent(`Hi TC Studios,
+
+I need a premium thumbnail for my upcoming video.
+
+Video Topic / Title: [Type here]
+Style Wanted: [e.g., Documentary, Finance, Mr Beast Style]
+
+Let's discuss the concept.`);
+
   return (
     <section id="contact" className="py-32 px-6 border-t border-white/5 relative">
       <div className="max-w-4xl mx-auto text-center reveal-on-scroll blur-reveal relative z-10">
@@ -12,7 +23,7 @@ const Contact = () => {
         </p>
 
         <a 
-          href="mailto:tanmay.chute.official@gmail.com"
+          href={`mailto:${email}?subject=${subject}&body=${body}`}
           target="_blank"
           rel="noopener noreferrer"
           className="group inline-flex items-center gap-4 bg-white text-black px-12 py-6 font-bold text-sm uppercase tracking-widest hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:scale-105 active:scale-95 transition-all mb-20 rounded-full"
