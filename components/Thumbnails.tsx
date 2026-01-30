@@ -27,7 +27,7 @@ const ARCHIVE = [
     icon: <Layers className="w-4 h-4 text-purple-500" />,
     gridClass: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 max-w-4xl", 
     items: [
-       { id: "c1", title: "The Narrative Engine", category: "Cinematic", image: "https://iili.io/fs9Wqb4.png" },
+       { id: "c1", title: "The Narrative Engine", category: "Cinematic", image: "https://i.postimg.cc/x16p0b3S/Survived_100_days_in_prison_final.png" },
        { id: "c2", title: "Survival Thriller", category: "Cinematic", image: "https://i.postimg.cc/cLvtzhQG/Survived-100-days-in-forest-(1).png" }
     ]
   },
