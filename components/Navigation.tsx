@@ -38,16 +38,16 @@ const Navigation = () => {
   return (
     <>
       {/* Scroll Progress Bar */}
-      <div className="fixed top-0 left-0 h-1 z-[100] w-full pointer-events-none">
+      <div className="fixed top-0 left-0 h-1 z-[110] w-full pointer-events-none">
         <div 
           className="h-full bg-gradient-to-r from-cyan-400 via-purple-500 to-cyan-400 transition-all duration-150 ease-out"
           style={{ width: `${scrollProgress * 100}%` }}
         />
       </div>
 
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out ${scrolled ? 'bg-black/80 backdrop-blur-xl py-4 border-b border-white/5' : 'bg-transparent py-6'}`}>
+      <nav className={`fixed top-0 w-full z-[100] transition-all duration-500 ease-in-out ${scrolled ? 'bg-black/80 backdrop-blur-xl py-4 border-b border-white/5' : 'bg-transparent py-6'}`}>
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <a href="#" className="text-2xl font-bold tracking-widest text-white uppercase z-50 hover:scale-105 transition-transform cursor-pointer">
+          <a href="#" className="text-2xl font-bold tracking-widest text-white uppercase z-[101] hover:scale-105 transition-transform cursor-pointer">
             TC Studios
           </a>
           
@@ -68,7 +68,7 @@ const Navigation = () => {
           {/* Mobile Menu Toggle */}
           <button 
             ref={toggleRef}
-            className="md:hidden text-white z-50 active:scale-90 transition-transform p-2"
+            className="md:hidden text-white z-[101] active:scale-90 transition-transform p-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
             aria-label="Toggle Menu"
@@ -79,7 +79,7 @@ const Navigation = () => {
 
         {/* Mobile Nav Overlay */}
         {mobileMenuOpen && (
-          <div className="absolute top-0 left-0 w-full h-screen bg-black/95 flex flex-col items-center justify-center space-y-8 z-40 animate-in fade-in zoom-in-95 duration-300">
+          <div className="absolute top-0 left-0 w-full h-screen bg-black/95 flex flex-col items-center justify-center space-y-8 z-[100] animate-in fade-in zoom-in-95 duration-300">
             {navLinks.map((link) => (
               <a 
                 key={link.name} 

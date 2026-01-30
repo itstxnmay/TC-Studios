@@ -158,7 +158,7 @@ const Thumbnails = () => {
                 <div key={cat.id} className="mb-20 last:mb-0">
                     {/* Category Header */}
                     <div className="flex items-center gap-4 mb-8 reveal-on-scroll">
-                        <div className="p-2 bg-white/5 rounded-lg border border-white/10">
+                        <div className="p-2 bg-white/5 rounded-lg border border-white/10 shrink-0">
                             {cat.icon}
                         </div>
                         <div>

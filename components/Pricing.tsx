@@ -128,7 +128,7 @@ const Pricing = () => {
             </div>
 
             {/* TIER 2: WEEKLY PARTNER (POPULAR) */}
-            <div className="reveal-on-scroll blur-reveal flex flex-col h-full bg-black border border-purple-500/50 hover:border-purple-400 shadow-[0_0_50px_rgba(168,85,247,0.15)] rounded-2xl p-8 transition-all duration-300 transform scale-105 z-20 relative">
+            <div className="reveal-on-scroll blur-reveal flex flex-col h-full bg-black border border-purple-500/50 hover:border-purple-400 shadow-[0_0_50px_rgba(168,85,247,0.15)] rounded-2xl p-8 transition-all duration-300 lg:transform lg:scale-105 z-20 relative">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full text-white text-[10px] font-bold uppercase tracking-widest shadow-lg flex items-center gap-2">
                     <Sparkles className="w-3 h-3" /> Popular
                 </div>

@@ -28,22 +28,27 @@ Let's discuss the concept.`);
     };
 
     window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
     handleScroll(); // Initial check
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   return (
     <>
         {/* 
-            Hidden on Mobile (< md). 
-            Visible on Tablet/Desktop (>= md) ONLY when pricing section is reached.
+            Visible on Mobile, Tablet, Desktop when pricing section is reached.
             Positioned on the RIGHT side.
+            On mobile: Full opacity when visible.
+            On desktop: Lower opacity until hover.
         */}
         <a
         href={`mailto:${email}?subject=${subject}&body=${body}`}
-        className={`fixed z-50 right-0 top-1/2 -translate-y-1/2 group hidden md:flex transition-all duration-500 ease-out transform ${
+        className={`fixed z-50 right-0 top-1/2 -translate-y-1/2 group flex transition-all duration-500 ease-out transform ${
             isVisible 
-                ? 'translate-x-0 opacity-40 hover:opacity-100' 
+                ? 'translate-x-0 opacity-100 md:opacity-40 md:hover:opacity-100' 
                 : 'translate-x-full opacity-0 pointer-events-none'
         }`}
         aria-label="Email Inquiry"
