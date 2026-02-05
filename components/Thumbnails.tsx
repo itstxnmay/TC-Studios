@@ -52,8 +52,9 @@ const ThumbnailItem = ({ thumb, onClick }: { thumb: any, onClick: () => void }) 
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(false);
     
-    // State to hold the current image source (starts with optimized)
-    const [currentSrc, setCurrentSrc] = useState(optimizeImage(thumb.image, 1200, 95));
+    // OPTIMIZATION: Use a smaller width (640px) and slightly lower quality (80) for grid view
+    // This is significantly faster than loading the 1200px+ original
+    const [currentSrc, setCurrentSrc] = useState(optimizeImage(thumb.image, 640, 80));
     const imgRef = useRef<HTMLImageElement>(null);
 
     useEffect(() => {
@@ -67,10 +68,8 @@ const ThumbnailItem = ({ thumb, onClick }: { thumb: any, onClick: () => void }) 
         if (currentSrc !== thumb.image) {
             console.warn(`Optimization failed for ${thumb.title}, falling back to original.`);
             setCurrentSrc(thumb.image);
-            // Reset loaded state to show spinner while original loads
             setLoaded(false); 
         } else {
-            // If original also fails, show error UI
             setError(true);
             setLoaded(true);
         }
@@ -101,12 +100,12 @@ const ThumbnailItem = ({ thumb, onClick }: { thumb: any, onClick: () => void }) 
                 alt={thumb.title}
                 className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${loaded ? 'opacity-100' : 'opacity-0'}`}
                 loading="lazy"
+                decoding="async"
                 onLoad={() => setLoaded(true)}
                 onError={handleError}
               />
               
               {/* Overlay Content */}
-              {/* Mobile: Always visible gradient at bottom. Desktop: Full overlay on hover. */}
               <div className="absolute inset-0 transition-all duration-300 z-20 p-6 flex flex-col 
                   opacity-100 bg-gradient-to-t from-black/95 via-black/40 to-transparent justify-end items-start
                   lg:opacity-0 lg:group-hover:opacity-100 lg:bg-cyan-950/90 lg:justify-center lg:items-center lg:backdrop-blur-sm"
@@ -123,7 +122,6 @@ const ThumbnailItem = ({ thumb, onClick }: { thumb: any, onClick: () => void }) 
                     {thumb.title}
                 </h3>
                 
-                {/* View Detail button - Desktop only to keep mobile clean */}
                 <div className="hidden lg:flex mt-4 items-center gap-2 text-xs text-cyan-200 font-bold uppercase tracking-widest border-b border-cyan-500/50 pb-0.5">
                   <ExternalLink className="w-3 h-3" /> View Detail
                 </div>
@@ -134,8 +132,8 @@ const ThumbnailItem = ({ thumb, onClick }: { thumb: any, onClick: () => void }) 
 };
 
 const Lightbox = ({ image, onClose }: { image: string, onClose: () => void }) => {
-    // Lightbox Fallback Logic
-    const [currentSrc, setCurrentSrc] = useState(optimizeImage(image, 2500, 95));
+    // Lightbox: Still use high resolution (2000px) for best quality when zoomed in
+    const [currentSrc, setCurrentSrc] = useState(optimizeImage(image, 2000, 90));
     const [error, setError] = useState(false);
 
     return (

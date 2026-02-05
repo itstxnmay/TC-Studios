@@ -7,7 +7,9 @@ import { optimizeImage } from '../utils/imageUtils';
 const PortfolioItem = ({ project }: { project: any }) => {
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(false);
-    const [currentSrc, setCurrentSrc] = useState(optimizeImage(project.image, 1200, 90));
+    
+    // OPTIMIZATION: Reduced from 1200px to 640px for grid items
+    const [currentSrc, setCurrentSrc] = useState(optimizeImage(project.image, 640, 85));
     const imgRef = useRef<HTMLImageElement>(null);
     
     useEffect(() => {

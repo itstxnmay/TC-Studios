@@ -46,7 +46,10 @@ const FinanceSection = () => {
     const Card = ({ item, isLarge = false }: { item: typeof thumbnails[0], isLarge?: boolean }) => {
         const [loaded, setLoaded] = useState(false);
         const [error, setError] = useState(false);
-        const [currentSrc, setCurrentSrc] = useState(optimizeImage(item.image, isLarge ? 1600 : 1200, 95));
+        
+        // OPTIMIZATION: Reduced width to 800 for large card, 600 for small cards. 
+        // Previously loading 1600/1200px.
+        const [currentSrc, setCurrentSrc] = useState(optimizeImage(item.image, isLarge ? 800 : 600, 85));
         const imgRef = useRef<HTMLImageElement>(null);
         
         useEffect(() => {
@@ -119,7 +122,8 @@ const FinanceSection = () => {
     };
 
     const Lightbox = ({ image, onClose }: { image: string, onClose: () => void }) => {
-        const [currentSrc, setCurrentSrc] = useState(optimizeImage(image, 2500, 95));
+        // Lightbox: Still use High Res (2000px)
+        const [currentSrc, setCurrentSrc] = useState(optimizeImage(image, 2000, 95));
         const [error, setError] = useState(false);
         
         return (

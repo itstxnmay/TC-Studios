@@ -20,9 +20,10 @@ const ComparisonSlider: React.FC<ComparisonSliderProps> = ({
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   
-  // URL States (Start with Optimized, fallback to original)
-  const [beforeSrc, setBeforeSrc] = useState(optimizeImage(imageBefore, 1600, 90));
-  const [afterSrc, setAfterSrc] = useState(optimizeImage(imageAfter, 1600, 90));
+  // OPTIMIZATION: Use 800px width and 85 quality for slider images.
+  // 1600px was overkill for the slider container size.
+  const [beforeSrc, setBeforeSrc] = useState(optimizeImage(imageBefore, 800, 85));
+  const [afterSrc, setAfterSrc] = useState(optimizeImage(imageAfter, 800, 85));
 
   const [isReady, setIsReady] = useState(false);
   const [loadedCount, setLoadedCount] = useState(0);

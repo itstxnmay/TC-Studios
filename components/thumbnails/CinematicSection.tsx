@@ -6,7 +6,10 @@ import { optimizeImage } from '../../utils/imageUtils';
 const CinematicImage = ({ src, alt, className }: { src: string, alt: string, className?: string }) => {
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(false);
-    const [currentSrc, setCurrentSrc] = useState(optimizeImage(src, 1600, 90));
+    
+    // OPTIMIZATION: Reduced width from 1600 to 800. 
+    // This is more than enough for half-width columns on desktop and full width on mobile.
+    const [currentSrc, setCurrentSrc] = useState(optimizeImage(src, 800, 85));
     const imgRef = useRef<HTMLImageElement>(null);
     
     useEffect(() => {
@@ -46,6 +49,7 @@ const CinematicImage = ({ src, alt, className }: { src: string, alt: string, cla
                 className={`${className} ${loaded ? 'opacity-100' : 'opacity-0'}`} 
                 onLoad={() => setLoaded(true)}
                 onError={handleError}
+                decoding="async"
             />
         </div>
     );
