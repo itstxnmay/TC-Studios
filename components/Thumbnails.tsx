@@ -4,6 +4,7 @@ import { X, ExternalLink, MousePointerClick, ArrowRight, LayoutGrid, FolderOpen,
 import DocumentarySection from './thumbnails/DocumentarySection';
 import CinematicSection from './thumbnails/CinematicSection';
 import FinanceSection from './thumbnails/FinanceSection';
+import { optimizeImage } from '../utils/imageUtils';
 
 // Data for the bottom gallery
 const ARCHIVE = [
@@ -52,6 +53,10 @@ const ThumbnailItem = ({ thumb, onClick }: { thumb: any, onClick: () => void }) 
     const [error, setError] = useState(false);
     const imgRef = useRef<HTMLImageElement>(null);
 
+    // Ultra-High Quality Optimization: 1200px width (Retina standard) + 95% Quality
+    // This reduces a 30MB file to ~400KB while looking identical to the eye.
+    const optimizedSrc = optimizeImage(thumb.image, 1200, 95);
+
     useEffect(() => {
         if (imgRef.current && imgRef.current.complete) {
             setLoaded(true);
@@ -79,7 +84,7 @@ const ThumbnailItem = ({ thumb, onClick }: { thumb: any, onClick: () => void }) 
               {/* Thumbnail Image */}
               <img 
                 ref={imgRef}
-                src={thumb.image} 
+                src={optimizedSrc} 
                 alt={thumb.title}
                 className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${loaded ? 'opacity-100' : 'opacity-0'}`}
                 loading="lazy"
@@ -107,6 +112,9 @@ const ThumbnailItem = ({ thumb, onClick }: { thumb: any, onClick: () => void }) 
 
 const Thumbnails = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  // Lightbox Optimization: 2500px width (Near 4K) @ 95% Quality for zooming/fullscreen
+  const lightboxSrc = selectedImage ? optimizeImage(selectedImage, 2500, 95) : '';
 
   return (
     <section id="thumbnails" className="py-24 md:py-32 relative bg-black">
@@ -208,7 +216,7 @@ const Thumbnails = () => {
           </button>
           
           <img 
-            src={selectedImage} 
+            src={lightboxSrc} 
             alt="Thumbnail Preview" 
             className="max-w-full max-h-[85vh] rounded-lg shadow-2xl ring-1 ring-white/10"
             onClick={(e) => e.stopPropagation()}

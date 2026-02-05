@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { TrendingUp, ArrowUpRight, DollarSign, Cpu, ChartBar, Wallet, X, Loader2 } from 'lucide-react';
+import { optimizeImage } from '../../utils/imageUtils';
 
 const FinanceSection = () => {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -45,6 +46,10 @@ const FinanceSection = () => {
     const Card = ({ item, isLarge = false }: { item: typeof thumbnails[0], isLarge?: boolean }) => {
         const [loaded, setLoaded] = useState(false);
         const imgRef = useRef<HTMLImageElement>(null);
+        
+        // High fidelity optimization: 1200px for small cards, 1600px for large card
+        // Quality 95 ensure no artifacts
+        const optimizedSrc = optimizeImage(item.image, isLarge ? 1600 : 1200, 95);
 
         useEffect(() => {
             if (imgRef.current && imgRef.current.complete) {
@@ -65,7 +70,7 @@ const FinanceSection = () => {
                     )}
                     <img 
                         ref={imgRef}
-                        src={item.image} 
+                        src={optimizedSrc} 
                         alt={item.title}
                         onLoad={() => setLoaded(true)}
                         className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-105 will-change-transform ${loaded ? 'opacity-100' : 'opacity-0'}`}
@@ -94,6 +99,9 @@ const FinanceSection = () => {
             </div>
         );
     };
+
+    // Optimize lightbox image separately
+    const lightboxSrc = selectedImage ? optimizeImage(selectedImage, 2500, 95) : '';
 
     return (
         <div className="w-full relative py-24 border-b border-white/5 bg-zinc-950">
@@ -158,7 +166,7 @@ const FinanceSection = () => {
                     </button>
                     
                     <img 
-                        src={selectedImage} 
+                        src={lightboxSrc} 
                         alt="Thumbnail Preview" 
                         className="max-w-full max-h-[85vh] rounded-lg shadow-2xl ring-1 ring-white/10"
                         onClick={(e) => e.stopPropagation()}

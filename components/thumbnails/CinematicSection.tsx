@@ -1,10 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Zap, Film, MonitorPlay, Sparkles, Loader2 } from 'lucide-react';
 import TiltCard from '../ui/TiltCard';
+import { optimizeImage } from '../../utils/imageUtils';
 
 const CinematicImage = ({ src, alt, className }: { src: string, alt: string, className?: string }) => {
     const [loaded, setLoaded] = useState(false);
     const imgRef = useRef<HTMLImageElement>(null);
+    
+    // Optimize these large feature images to 1600px width @ 90% Quality
+    // This is sharp enough for large desktop monitors while saving bandwidth
+    const optimizedSrc = optimizeImage(src, 1600, 90);
 
     useEffect(() => {
         if (imgRef.current && imgRef.current.complete) {
@@ -21,7 +26,7 @@ const CinematicImage = ({ src, alt, className }: { src: string, alt: string, cla
             )}
             <img 
                 ref={imgRef}
-                src={src} 
+                src={optimizedSrc} 
                 alt={alt} 
                 className={`${className} ${loaded ? 'opacity-100' : 'opacity-0'}`} 
                 onLoad={() => setLoaded(true)}
