@@ -92,8 +92,12 @@ const FinanceSection = () => {
                 </div>
 
                 {/* Hover Overlay Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 md:p-6 z-20">
-                    <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 ease-out">
+                {/* Mobile: Opacity 100, Desktop: Opacity 0 (hover 100) */}
+                <div className="absolute inset-0 transition-opacity duration-300 flex flex-col justify-end p-4 md:p-6 z-20
+                    opacity-100 bg-gradient-to-t from-black/90 via-black/40 to-transparent
+                    md:opacity-0 md:group-hover:opacity-100"
+                >
+                    <div className="transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300 ease-out">
                         <div className="flex items-center gap-2 text-emerald-400 text-[10px] font-bold uppercase tracking-widest mb-2">
                             {item.icon}
                             {item.category}
@@ -103,8 +107,8 @@ const FinanceSection = () => {
                         </h4>
                     </div>
                     
-                    {/* External Link Icon */}
-                    <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                    {/* External Link Icon - Desktop Only to keep mobile clean */}
+                    <div className="hidden md:block absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
                         <div className="w-8 h-8 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white">
                             <ArrowUpRight className="w-4 h-4" />
                         </div>
@@ -124,7 +128,7 @@ const FinanceSection = () => {
                 onClick={onClose}
             >
                 <button 
-                    className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors p-2"
+                    className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors p-2 z-50"
                     onClick={(e) => {
                         e.stopPropagation();
                         onClose();
@@ -142,7 +146,7 @@ const FinanceSection = () => {
                     <img 
                         src={currentSrc} 
                         alt="Thumbnail Preview" 
-                        className="max-w-full max-h-[85vh] rounded-lg shadow-2xl ring-1 ring-white/10"
+                        className="max-w-full max-h-[85vh] rounded-lg shadow-2xl ring-1 ring-white/10 object-contain"
                         onClick={(e) => e.stopPropagation()}
                         onError={() => {
                             if (currentSrc !== image) {

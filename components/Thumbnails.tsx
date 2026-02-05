@@ -105,13 +105,26 @@ const ThumbnailItem = ({ thumb, onClick }: { thumb: any, onClick: () => void }) 
                 onError={handleError}
               />
               
-              {/* Overlay on Hover */}
-              <div className="absolute inset-0 bg-cyan-950/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-6 backdrop-blur-sm z-20">
-                <span className="px-3 py-1 bg-black/50 border border-cyan-500/30 rounded-full text-cyan-300 text-[10px] font-bold uppercase tracking-widest mb-3">
+              {/* Overlay Content */}
+              {/* Mobile: Always visible gradient at bottom. Desktop: Full overlay on hover. */}
+              <div className="absolute inset-0 transition-all duration-300 z-20 p-6 flex flex-col 
+                  opacity-100 bg-gradient-to-t from-black/95 via-black/40 to-transparent justify-end items-start
+                  lg:opacity-0 lg:group-hover:opacity-100 lg:bg-cyan-950/90 lg:justify-center lg:items-center lg:backdrop-blur-sm"
+              >
+                <span className="
+                    px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-2
+                    bg-cyan-500/20 text-cyan-300 border border-cyan-500/30
+                    lg:bg-black/50 lg:text-cyan-300 lg:border-cyan-500/30 lg:mb-3
+                ">
                   {thumb.category}
                 </span>
-                <h3 className="text-white font-bold text-xl text-center mb-1">{thumb.title}</h3>
-                <div className="mt-4 flex items-center gap-2 text-xs text-cyan-200 font-bold uppercase tracking-widest border-b border-cyan-500/50 pb-0.5">
+                
+                <h3 className="text-white font-bold text-lg lg:text-xl lg:text-center leading-tight mb-0 lg:mb-1">
+                    {thumb.title}
+                </h3>
+                
+                {/* View Detail button - Desktop only to keep mobile clean */}
+                <div className="hidden lg:flex mt-4 items-center gap-2 text-xs text-cyan-200 font-bold uppercase tracking-widest border-b border-cyan-500/50 pb-0.5">
                   <ExternalLink className="w-3 h-3" /> View Detail
                 </div>
               </div>
@@ -131,7 +144,7 @@ const Lightbox = ({ image, onClose }: { image: string, onClose: () => void }) =>
           onClick={onClose}
         >
           <button 
-            className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors p-2"
+            className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors p-2 z-50"
             onClick={onClose}
           >
             <X className="w-8 h-8" />
@@ -146,7 +159,7 @@ const Lightbox = ({ image, onClose }: { image: string, onClose: () => void }) =>
               <img 
                 src={currentSrc} 
                 alt="Thumbnail Preview" 
-                className="max-w-full max-h-[85vh] rounded-lg shadow-2xl ring-1 ring-white/10"
+                className="max-w-full max-h-[85vh] rounded-lg shadow-2xl ring-1 ring-white/10 object-contain"
                 onClick={(e) => e.stopPropagation()}
                 onError={() => {
                     if (currentSrc !== image) {

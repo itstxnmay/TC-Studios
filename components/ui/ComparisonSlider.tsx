@@ -117,6 +117,11 @@ const ComparisonSlider: React.FC<ComparisonSliderProps> = ({
     <div 
       ref={containerRef}
       className={`relative w-full aspect-video select-none group overflow-hidden rounded-xl border border-white/10 bg-zinc-900 shadow-2xl ${!isReady ? 'animate-pulse' : ''}`}
+      style={{ 
+        touchAction: 'none', // Critical for mobile dragging
+        WebkitUserSelect: 'none',
+        userSelect: 'none'
+      }}
       onMouseDown={onMouseDown}
       onTouchStart={onMouseDown}
     >

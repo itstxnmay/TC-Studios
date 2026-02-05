@@ -67,11 +67,13 @@ const PortfolioItem = ({ project }: { project: any }) => {
           />
           
           {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-transparent opacity-90 group-hover:opacity-95 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-transparent 
+              opacity-100 md:opacity-90 md:group-hover:opacity-95 transition-opacity duration-500" 
+          />
           
           {/* Overlay Content */}
-          <div className="absolute inset-0 p-8 flex flex-col justify-end z-40">
-            <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+          <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end z-40">
+            <div className="transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500">
                {/* Client Tag */}
                <div className="flex items-center gap-3 mb-3">
                   <span className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-zinc-400 text-[10px] font-bold uppercase tracking-widest group-hover:text-white transition-colors">
@@ -79,9 +81,10 @@ const PortfolioItem = ({ project }: { project: any }) => {
                   </span>
                </div>
                
-               <h3 className="text-3xl font-black text-zinc-500 group-hover:text-white transition-colors duration-300 mb-2 leading-none">{project.title}</h3>
+               <h3 className="text-2xl md:text-3xl font-black text-zinc-500 group-hover:text-white transition-colors duration-300 mb-2 leading-none">{project.title}</h3>
                
-               <div className="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100">
+               {/* Details hidden on mobile to keep it clean, shown on desktop hover */}
+               <div className="hidden md:block h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100">
                   <p className="text-zinc-500 text-sm leading-relaxed mb-4 mt-2 border-l-2 border-zinc-700 pl-4 group-hover:text-zinc-400">
                     {project.description}
                   </p>
