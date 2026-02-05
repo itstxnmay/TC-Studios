@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { TrendingUp, ArrowUpRight, DollarSign, Cpu, ChartBar, Wallet, X, Loader2 } from 'lucide-react';
+import { TrendingUp, ArrowUpRight, DollarSign, Cpu, ChartBar, Wallet, X, Loader2, ImageOff } from 'lucide-react';
 import { optimizeImage } from '../../utils/imageUtils';
 
 const FinanceSection = () => {
@@ -45,17 +45,25 @@ const FinanceSection = () => {
 
     const Card = ({ item, isLarge = false }: { item: typeof thumbnails[0], isLarge?: boolean }) => {
         const [loaded, setLoaded] = useState(false);
+        const [error, setError] = useState(false);
+        const [currentSrc, setCurrentSrc] = useState(optimizeImage(item.image, isLarge ? 1600 : 1200, 95));
         const imgRef = useRef<HTMLImageElement>(null);
         
-        // High fidelity optimization: 1200px for small cards, 1600px for large card
-        // Quality 95 ensure no artifacts
-        const optimizedSrc = optimizeImage(item.image, isLarge ? 1600 : 1200, 95);
-
         useEffect(() => {
             if (imgRef.current && imgRef.current.complete) {
                 setLoaded(true);
             }
         }, []);
+
+        const handleError = () => {
+            if (currentSrc !== item.image) {
+                setCurrentSrc(item.image);
+                setLoaded(false);
+            } else {
+                setError(true);
+                setLoaded(true);
+            }
+        };
 
         return (
             <div 
@@ -63,16 +71,22 @@ const FinanceSection = () => {
             >
                 {/* Image */}
                 <div className="absolute inset-0 w-full h-full overflow-hidden">
-                    {!loaded && (
+                    {!loaded && !error && (
                         <div className="absolute inset-0 flex items-center justify-center bg-zinc-900 z-10">
                             <Loader2 className="w-8 h-8 text-emerald-500 animate-spin" />
                         </div>
                     )}
+                     {error && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-zinc-900 z-20">
+                            <ImageOff className="w-8 h-8 text-zinc-600" />
+                        </div>
+                    )}
                     <img 
                         ref={imgRef}
-                        src={optimizedSrc} 
+                        src={currentSrc} 
                         alt={item.title}
                         onLoad={() => setLoaded(true)}
+                        onError={handleError}
                         className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-105 will-change-transform ${loaded ? 'opacity-100' : 'opacity-0'}`}
                     />
                 </div>
@@ -100,8 +114,48 @@ const FinanceSection = () => {
         );
     };
 
-    // Optimize lightbox image separately
-    const lightboxSrc = selectedImage ? optimizeImage(selectedImage, 2500, 95) : '';
+    const Lightbox = ({ image, onClose }: { image: string, onClose: () => void }) => {
+        const [currentSrc, setCurrentSrc] = useState(optimizeImage(image, 2500, 95));
+        const [error, setError] = useState(false);
+        
+        return (
+            <div 
+                className="fixed inset-0 z-[150] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 animate-in fade-in duration-200"
+                onClick={onClose}
+            >
+                <button 
+                    className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors p-2"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onClose();
+                    }}
+                >
+                    <X className="w-8 h-8" />
+                </button>
+                
+                {error ? (
+                    <div className="flex flex-col items-center text-white">
+                        <ImageOff className="w-12 h-12 mb-2 text-zinc-500"/>
+                        <span>Image Unavailable</span>
+                    </div>
+                ) : (
+                    <img 
+                        src={currentSrc} 
+                        alt="Thumbnail Preview" 
+                        className="max-w-full max-h-[85vh] rounded-lg shadow-2xl ring-1 ring-white/10"
+                        onClick={(e) => e.stopPropagation()}
+                        onError={() => {
+                            if (currentSrc !== image) {
+                                setCurrentSrc(image);
+                            } else {
+                                setError(true);
+                            }
+                        }}
+                    />
+                )}
+            </div>
+        )
+    }
 
     return (
         <div className="w-full relative py-24 border-b border-white/5 bg-zinc-950">
@@ -151,27 +205,7 @@ const FinanceSection = () => {
 
             {/* Lightbox */}
             {selectedImage && (
-                <div 
-                    className="fixed inset-0 z-[150] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 animate-in fade-in duration-200"
-                    onClick={() => setSelectedImage(null)}
-                >
-                    <button 
-                        className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors p-2"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedImage(null);
-                        }}
-                    >
-                        <X className="w-8 h-8" />
-                    </button>
-                    
-                    <img 
-                        src={lightboxSrc} 
-                        alt="Thumbnail Preview" 
-                        className="max-w-full max-h-[85vh] rounded-lg shadow-2xl ring-1 ring-white/10"
-                        onClick={(e) => e.stopPropagation()}
-                    />
-                </div>
+                <Lightbox image={selectedImage} onClose={() => setSelectedImage(null)} />
             )}
         </div>
     );

@@ -1,31 +1,28 @@
 import React from 'react';
 import ComparisonSlider from '../ui/ComparisonSlider';
 import { Film, Aperture, TrendingUp, Palette, Layers, MousePointer2, ChartPie, Target, Brain, Zap, ScanFace, ChartLine } from 'lucide-react';
-import { optimizeImage } from '../../utils/imageUtils';
+// Note: We do NOT import optimizeImage here anymore, we pass raw URLs to ComparisonSlider which handles optimization + fallback internally.
 
 const DocumentarySection = () => {
   // ==================================================================================
-  // IMAGE ASSETS (Optimized High Fidelity)
-  // Optimization Note: Increased to 1600px width @ 90% Quality for comparison precision
+  // IMAGE ASSETS (Raw URLs)
   // ==================================================================================
-  const OPT_WIDTH = 1600;
-  const OPT_QUALITY = 90;
-
+  
   // Case 1: Starbucks
-  const starbucksBefore = optimizeImage("https://i.postimg.cc/cJgpGLYQ/Low-Budget-Thumbnail.jpg", OPT_WIDTH, OPT_QUALITY); 
-  const starbucksAfter = optimizeImage("https://i.postimg.cc/sxQQpSZc/Starbucks-Truth.png", OPT_WIDTH, OPT_QUALITY); 
+  const starbucksBefore = "https://i.postimg.cc/cJgpGLYQ/Low-Budget-Thumbnail.jpg"; 
+  const starbucksAfter = "https://i.postimg.cc/sxQQpSZc/Starbucks-Truth.png"; 
 
   // Case 2: Coca Cola
-  const cokeBefore = optimizeImage("https://i.postimg.cc/W15dHTcH/coca-cola-low-budget-thumbnail.jpg", OPT_WIDTH, OPT_QUALITY);
-  const cokeAfter = optimizeImage("https://i.postimg.cc/XNkw4MfB/The-Dark-truth-of-Cocacola.png", OPT_WIDTH, OPT_QUALITY);
+  const cokeBefore = "https://i.postimg.cc/W15dHTcH/coca-cola-low-budget-thumbnail.jpg";
+  const cokeAfter = "https://i.postimg.cc/XNkw4MfB/The-Dark-truth-of-Cocacola.png";
 
   // Case 3: Stock Market
-  const stockBefore = optimizeImage("https://i.postimg.cc/4y18Cm54/stock-market-trap-low-budget-thumbnail.jpg", OPT_WIDTH, OPT_QUALITY);
-  const stockAfter = optimizeImage("https://i.postimg.cc/LsTh1SN1/Dark-truth-about-Stock-Market.png", OPT_WIDTH, OPT_QUALITY);
+  const stockBefore = "https://i.postimg.cc/4y18Cm54/stock-market-trap-low-budget-thumbnail.jpg";
+  const stockAfter = "https://i.postimg.cc/LsTh1SN1/Dark-truth-about-Stock-Market.png";
 
   // Case 4: Brain Rot
-  const brainRotBefore = optimizeImage("https://i.postimg.cc/brCS7hKm/brain-rot-low-budget-thumbnail-image.jpg", OPT_WIDTH, OPT_QUALITY);
-  const brainRotAfter = optimizeImage("https://i.postimg.cc/dtCqPvPr/Why-you-are-stuck.jpg", OPT_WIDTH, OPT_QUALITY);
+  const brainRotBefore = "https://i.postimg.cc/brCS7hKm/brain-rot-low-budget-thumbnail-image.jpg";
+  const brainRotAfter = "https://i.postimg.cc/dtCqPvPr/Why-you-are-stuck.jpg";
 
   return (
     <div className="w-full relative py-20 border-b border-white/5">

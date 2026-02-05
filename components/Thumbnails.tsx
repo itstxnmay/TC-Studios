@@ -51,17 +51,30 @@ const ARCHIVE = [
 const ThumbnailItem = ({ thumb, onClick }: { thumb: any, onClick: () => void }) => {
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(false);
+    
+    // State to hold the current image source (starts with optimized)
+    const [currentSrc, setCurrentSrc] = useState(optimizeImage(thumb.image, 1200, 95));
     const imgRef = useRef<HTMLImageElement>(null);
-
-    // Ultra-High Quality Optimization: 1200px width (Retina standard) + 95% Quality
-    // This reduces a 30MB file to ~400KB while looking identical to the eye.
-    const optimizedSrc = optimizeImage(thumb.image, 1200, 95);
 
     useEffect(() => {
         if (imgRef.current && imgRef.current.complete) {
             setLoaded(true);
         }
     }, []);
+
+    const handleError = () => {
+        // If optimization fails, fallback to original
+        if (currentSrc !== thumb.image) {
+            console.warn(`Optimization failed for ${thumb.title}, falling back to original.`);
+            setCurrentSrc(thumb.image);
+            // Reset loaded state to show spinner while original loads
+            setLoaded(false); 
+        } else {
+            // If original also fails, show error UI
+            setError(true);
+            setLoaded(true);
+        }
+    };
 
     return (
         <TiltCard className="group relative aspect-video rounded-xl overflow-hidden cursor-pointer border border-white/5 hover:border-cyan-500/50 bg-zinc-900 shadow-2xl transition-all duration-300">
@@ -84,15 +97,12 @@ const ThumbnailItem = ({ thumb, onClick }: { thumb: any, onClick: () => void }) 
               {/* Thumbnail Image */}
               <img 
                 ref={imgRef}
-                src={optimizedSrc} 
+                src={currentSrc} 
                 alt={thumb.title}
                 className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${loaded ? 'opacity-100' : 'opacity-0'}`}
                 loading="lazy"
                 onLoad={() => setLoaded(true)}
-                onError={() => {
-                    setError(true);
-                    setLoaded(true);
-                }}
+                onError={handleError}
               />
               
               {/* Overlay on Hover */}
@@ -110,11 +120,49 @@ const ThumbnailItem = ({ thumb, onClick }: { thumb: any, onClick: () => void }) 
     );
 };
 
+const Lightbox = ({ image, onClose }: { image: string, onClose: () => void }) => {
+    // Lightbox Fallback Logic
+    const [currentSrc, setCurrentSrc] = useState(optimizeImage(image, 2500, 95));
+    const [error, setError] = useState(false);
+
+    return (
+        <div 
+          className="fixed inset-0 z-[150] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 animate-in fade-in duration-200"
+          onClick={onClose}
+        >
+          <button 
+            className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors p-2"
+            onClick={onClose}
+          >
+            <X className="w-8 h-8" />
+          </button>
+          
+          {error ? (
+              <div className="text-white flex flex-col items-center">
+                  <ImageOff className="w-12 h-12 mb-4 text-zinc-500" />
+                  <p>Image Unavailable</p>
+              </div>
+          ) : (
+              <img 
+                src={currentSrc} 
+                alt="Thumbnail Preview" 
+                className="max-w-full max-h-[85vh] rounded-lg shadow-2xl ring-1 ring-white/10"
+                onClick={(e) => e.stopPropagation()}
+                onError={() => {
+                    if (currentSrc !== image) {
+                        setCurrentSrc(image);
+                    } else {
+                        setError(true);
+                    }
+                }}
+              />
+          )}
+        </div>
+    );
+}
+
 const Thumbnails = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  // Lightbox Optimization: 2500px width (Near 4K) @ 95% Quality for zooming/fullscreen
-  const lightboxSrc = selectedImage ? optimizeImage(selectedImage, 2500, 95) : '';
 
   return (
     <section id="thumbnails" className="py-24 md:py-32 relative bg-black">
@@ -204,24 +252,7 @@ const Thumbnails = () => {
 
       {/* Lightbox for Thumbnails */}
       {selectedImage && (
-        <div 
-          className="fixed inset-0 z-[150] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 animate-in fade-in duration-200"
-          onClick={() => setSelectedImage(null)}
-        >
-          <button 
-            className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors p-2"
-            onClick={() => setSelectedImage(null)}
-          >
-            <X className="w-8 h-8" />
-          </button>
-          
-          <img 
-            src={lightboxSrc} 
-            alt="Thumbnail Preview" 
-            className="max-w-full max-h-[85vh] rounded-lg shadow-2xl ring-1 ring-white/10"
-            onClick={(e) => e.stopPropagation()}
-          />
-        </div>
+        <Lightbox image={selectedImage} onClose={() => setSelectedImage(null)} />
       )}
     </section>
   );

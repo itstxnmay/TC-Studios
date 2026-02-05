@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { ChevronsLeftRight, ImageOff } from 'lucide-react';
+import { optimizeImage } from '../../utils/imageUtils';
 
 interface ComparisonSliderProps {
   imageBefore: string;
@@ -18,6 +19,11 @@ const ComparisonSlider: React.FC<ComparisonSliderProps> = ({
 }) => {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
+  
+  // URL States (Start with Optimized, fallback to original)
+  const [beforeSrc, setBeforeSrc] = useState(optimizeImage(imageBefore, 1600, 90));
+  const [afterSrc, setAfterSrc] = useState(optimizeImage(imageAfter, 1600, 90));
+
   const [isReady, setIsReady] = useState(false);
   const [loadedCount, setLoadedCount] = useState(0);
   const [hasError, setHasError] = useState(false);
@@ -27,9 +33,25 @@ const ComparisonSlider: React.FC<ComparisonSliderProps> = ({
     setLoadedCount(prev => prev + 1);
   };
 
-  const handleImageError = () => {
-    setHasError(true);
-    setLoadedCount(prev => prev + 1);
+  const handleBeforeError = () => {
+      if (beforeSrc !== imageBefore) {
+          console.warn("Optimized 'Before' image failed, switching to original.");
+          setBeforeSrc(imageBefore);
+          // Don't increment loaded count here, let the new image trigger onLoad
+      } else {
+          setHasError(true);
+          setLoadedCount(prev => prev + 1);
+      }
+  };
+
+  const handleAfterError = () => {
+      if (afterSrc !== imageAfter) {
+          console.warn("Optimized 'After' image failed, switching to original.");
+          setAfterSrc(imageAfter);
+      } else {
+          setHasError(true);
+          setLoadedCount(prev => prev + 1);
+      }
   };
 
   useEffect(() => {
@@ -104,8 +126,8 @@ const ComparisonSlider: React.FC<ComparisonSliderProps> = ({
         )}
 
         {/* Hidden Loading Triggers */}
-        <img src={imageBefore} className="hidden" onLoad={handleImageLoad} onError={handleImageError} />
-        <img src={imageAfter} className="hidden" onLoad={handleImageLoad} onError={handleImageError} />
+        <img src={beforeSrc} className="hidden" onLoad={handleImageLoad} onError={handleBeforeError} />
+        <img src={afterSrc} className="hidden" onLoad={handleImageLoad} onError={handleAfterError} />
 
         {/* Content (Fade in when ready) */}
         <div className={`absolute inset-0 transition-opacity duration-700 ${isReady ? 'opacity-100' : 'opacity-0'}`}>
@@ -119,7 +141,7 @@ const ComparisonSlider: React.FC<ComparisonSliderProps> = ({
                 <>
                     {/* 1. After Image (Background / High Budget) */}
                     <img 
-                        src={imageAfter} 
+                        src={afterSrc} 
                         className="absolute inset-0 w-full h-full object-cover" 
                         draggable={false} 
                         alt="After"
@@ -131,7 +153,7 @@ const ComparisonSlider: React.FC<ComparisonSliderProps> = ({
                         style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
                     >
                         <img 
-                            src={imageBefore} 
+                            src={beforeSrc} 
                             className="absolute inset-0 w-full h-full object-cover" 
                             draggable={false}
                             alt="Before"

@@ -7,16 +7,24 @@ import { optimizeImage } from '../utils/imageUtils';
 const PortfolioItem = ({ project }: { project: any }) => {
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(false);
+    const [currentSrc, setCurrentSrc] = useState(optimizeImage(project.image, 1200, 90));
     const imgRef = useRef<HTMLImageElement>(null);
     
-    // Optimize portfolio items (1200px width @ 90% quality for crisp display)
-    const optimizedSrc = optimizeImage(project.image, 1200, 90);
-
     useEffect(() => {
         if (imgRef.current && imgRef.current.complete) {
             setLoaded(true);
         }
     }, []);
+
+    const handleError = () => {
+        if (currentSrc !== project.image) {
+            setCurrentSrc(project.image);
+            setLoaded(false);
+        } else {
+            setError(true);
+            setLoaded(true);
+        }
+    };
 
     return (
         <TiltCard 
@@ -49,16 +57,13 @@ const PortfolioItem = ({ project }: { project: any }) => {
           {/* Image with Filter - Darkened to imply locked state */}
           <img 
             ref={imgRef}
-            src={optimizedSrc} 
+            src={currentSrc} 
             alt={project.title}
             className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-105 grayscale group-hover:grayscale-[0.5] opacity-60 group-hover:opacity-80 will-change-transform ${loaded ? '' : 'opacity-0'}`}
             loading="lazy"
             decoding="async"
             onLoad={() => setLoaded(true)}
-            onError={() => {
-                setError(true);
-                setLoaded(true);
-            }}
+            onError={handleError}
           />
           
           {/* Gradient Overlay */}
