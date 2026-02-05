@@ -169,17 +169,17 @@ const ComparisonSlider: React.FC<ComparisonSliderProps> = ({
 
             {/* 3. Labels */}
             {/* Left Label (Amateur) */}
-            <div className={`absolute top-4 left-4 z-20 transition-opacity duration-300 ${sliderPosition < 10 ? 'opacity-0' : 'opacity-100'}`}>
-                <div className="px-3 py-1.5 bg-black/80 backdrop-blur-md border border-white/10 rounded text-[10px] font-bold tracking-widest uppercase text-zinc-400 shadow-xl flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-zinc-600"></span>
+            <div className={`absolute top-2 left-2 md:top-4 md:left-4 z-20 transition-opacity duration-300 ${sliderPosition < 10 ? 'opacity-0' : 'opacity-100'}`}>
+                <div className="px-2 py-1 md:px-3 md:py-1.5 bg-black/80 backdrop-blur-md border border-white/10 rounded text-[8px] md:text-[10px] font-bold tracking-widest uppercase text-zinc-400 shadow-xl flex items-center gap-1 md:gap-2">
+                    <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-zinc-600"></span>
                     {labelBefore}
                 </div>
             </div>
 
             {/* Right Label (Pro) */}
-            <div className={`absolute top-4 right-4 z-20 transition-opacity duration-300 ${sliderPosition > 90 ? 'opacity-0' : 'opacity-100'}`}>
-                 <div className={`px-3 py-1.5 backdrop-blur-md border rounded text-[10px] font-bold tracking-widest uppercase shadow-xl flex items-center gap-2 ${currentTheme.badge}`}>
-                    <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span>
+            <div className={`absolute top-2 right-2 md:top-4 md:right-4 z-20 transition-opacity duration-300 ${sliderPosition > 90 ? 'opacity-0' : 'opacity-100'}`}>
+                 <div className={`px-2 py-1 md:px-3 md:py-1.5 backdrop-blur-md border rounded text-[8px] md:text-[10px] font-bold tracking-widest uppercase shadow-xl flex items-center gap-1 md:gap-2 ${currentTheme.badge}`}>
+                    <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-current animate-pulse"></span>
                     {labelAfter}
                 </div>
             </div>
