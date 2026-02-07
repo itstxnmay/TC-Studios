@@ -2,14 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Play, ArrowRight, Loader2, Clock, Lock, ImageOff } from 'lucide-react';
 import TiltCard from './ui/TiltCard';
 import { PROJECTS } from '../constants';
-import { optimizeImage } from '../utils/imageUtils';
 
 const PortfolioItem = ({ project }: { project: any }) => {
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(false);
     
-    // OPTIMIZATION: Reduced from 1200px to 640px for grid items
-    const [currentSrc, setCurrentSrc] = useState(optimizeImage(project.image, 640, 85));
     const imgRef = useRef<HTMLImageElement>(null);
     
     useEffect(() => {
@@ -17,16 +14,6 @@ const PortfolioItem = ({ project }: { project: any }) => {
             setLoaded(true);
         }
     }, []);
-
-    const handleError = () => {
-        if (currentSrc !== project.image) {
-            setCurrentSrc(project.image);
-            setLoaded(false);
-        } else {
-            setError(true);
-            setLoaded(true);
-        }
-    };
 
     return (
         <TiltCard 
@@ -59,13 +46,13 @@ const PortfolioItem = ({ project }: { project: any }) => {
           {/* Image with Filter - Darkened to imply locked state */}
           <img 
             ref={imgRef}
-            src={currentSrc} 
+            src={project.image} 
             alt={project.title}
             className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-105 grayscale group-hover:grayscale-[0.5] opacity-60 group-hover:opacity-80 will-change-transform ${loaded ? '' : 'opacity-0'}`}
             loading="lazy"
             decoding="async"
             onLoad={() => setLoaded(true)}
-            onError={handleError}
+            onError={() => { setError(true); setLoaded(true); }}
           />
           
           {/* Gradient Overlay */}

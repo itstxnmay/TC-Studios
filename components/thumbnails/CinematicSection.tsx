@@ -1,15 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Zap, Film, MonitorPlay, Sparkles, Loader2, ImageOff } from 'lucide-react';
 import TiltCard from '../ui/TiltCard';
-import { optimizeImage } from '../../utils/imageUtils';
 
 const CinematicImage = ({ src, alt, className }: { src: string, alt: string, className?: string }) => {
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(false);
     
-    // OPTIMIZATION: Reduced width from 1600 to 800. 
-    // This is more than enough for half-width columns on desktop and full width on mobile.
-    const [currentSrc, setCurrentSrc] = useState(optimizeImage(src, 800, 85));
     const imgRef = useRef<HTMLImageElement>(null);
     
     useEffect(() => {
@@ -17,16 +13,6 @@ const CinematicImage = ({ src, alt, className }: { src: string, alt: string, cla
             setLoaded(true);
         }
     }, []);
-
-    const handleError = () => {
-        if (currentSrc !== src) {
-            setCurrentSrc(src);
-            setLoaded(false);
-        } else {
-            setError(true);
-            setLoaded(true);
-        }
-    };
 
     return (
         <div className="relative w-full h-full">
@@ -44,11 +30,11 @@ const CinematicImage = ({ src, alt, className }: { src: string, alt: string, cla
 
             <img 
                 ref={imgRef}
-                src={currentSrc} 
+                src={src} 
                 alt={alt} 
                 className={`${className} ${loaded ? 'opacity-100' : 'opacity-0'}`} 
                 onLoad={() => setLoaded(true)}
-                onError={handleError}
+                onError={() => { setError(true); setLoaded(true); }}
                 decoding="async"
             />
         </div>
@@ -56,18 +42,19 @@ const CinematicImage = ({ src, alt, className }: { src: string, alt: string, cla
 }
 
 const CinematicSection = () => {
+    // RESTORED: User's original PostImage portfolio links
     const examples = [
         {
             id: 1,
             label: "Narrative Storytelling",
             caption: "Survive 100 Days In Prison, Win $10,000",
             beast: {
-                image: "https://i.postimg.cc/tJ0d4Pkc/TDv56whos-PQ-HD.jpg",
+                image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770473962/TDv56whosPQ-HD_nvlgsa.jpg", 
                 title: "The \"Viral Arcade\" Engine",
                 desc: "Optimized for mass appeal. High-Saturation and Hyper-Expression create competitive tension."
             },
             tc: {
-                image: "https://i.postimg.cc/x16p0b3S/Survived-100-days-in-prison-final.png",
+                image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770472956/Survived_100_days_in_prison_xz88gp.webp", 
                 title: "The \"Cinematic Narrative\" Engine",
                 desc: "Optimized for retention. Atmospheric Lighting and Environmental Storytelling create immersion."
             }
@@ -77,12 +64,12 @@ const CinematicSection = () => {
             label: "Survival Thriller",
             caption: "$10,000 Every Day You Survive In The Wilderness",
             beast: {
-                image: "https://i.postimg.cc/yYPTKLg8/U-Ll-X4t0A9I-HD.jpg",
+                image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770473961/U_LlX4t0A9I-HD_fvmqbe.jpg",
                 title: "The \"Celebrity Focus\" Engine",
                 desc: "Prioritizes personality over danger. High-Key lighting assures safety and fun."
             },
             tc: {
-                image: "https://i.postimg.cc/cLvtzhQG/Survived-100-days-in-forest-(1).png",
+                image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770472984/Survived_100_days_in_forest_a9vmlg.webp",
                 title: "The \"True Stakes\" Engine",
                 desc: "Prioritizes struggle over personality. Gritty textures sell the reality of the survival challenge."
             }

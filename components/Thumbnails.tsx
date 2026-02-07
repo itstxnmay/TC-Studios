@@ -4,7 +4,6 @@ import { X, ExternalLink, MousePointerClick, ArrowRight, LayoutGrid, FolderOpen,
 import DocumentarySection from './thumbnails/DocumentarySection';
 import CinematicSection from './thumbnails/CinematicSection';
 import FinanceSection from './thumbnails/FinanceSection';
-import { optimizeImage } from '../utils/imageUtils';
 
 // Data for the bottom gallery
 const ARCHIVE = [
@@ -15,10 +14,10 @@ const ARCHIVE = [
     icon: <Film className="w-4 h-4 text-amber-500" />,
     gridClass: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4",
     items: [
-       { id: "d1", title: "Starbucks Truth", category: "Documentary", image: "https://i.postimg.cc/sxQQpSZc/Starbucks-Truth.png" },
-       { id: "d2", title: "Dark Truth of Coke", category: "Documentary", image: "https://i.postimg.cc/XNkw4MfB/The-Dark-truth-of-Cocacola.png" },
-       { id: "d3", title: "Stock Market Trap", category: "Documentary", image: "https://i.postimg.cc/LsTh1SN1/Dark-truth-about-Stock-Market.png" },
-       { id: "d4", title: "Brain Rot", category: "Documentary", image: "https://i.postimg.cc/dtCqPvPr/Why-you-are-stuck.jpg" }
+       { id: "d1", title: "Starbucks Truth", category: "Documentary", image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770472822/Starbucks_Truth_ncan8t.webp" },
+       { id: "d2", title: "Dark Truth of Coke", category: "Documentary", image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770473018/The_Dark_truth_of_Cocacola_q9n42w.webp" },
+       { id: "d3", title: "Stock Market Trap", category: "Documentary", image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770472910/Dark_truth_about_Stock_Market_le7kxj.webp" },
+       { id: "d4", title: "Brain Rot", category: "Documentary", image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770473030/Why_you_are_stuck_pxhxc6.webp" }
     ]
   },
   {
@@ -28,8 +27,8 @@ const ARCHIVE = [
     icon: <Layers className="w-4 h-4 text-purple-500" />,
     gridClass: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 max-w-4xl", 
     items: [
-       { id: "c1", title: "The Narrative Engine", category: "Cinematic", image: "https://i.postimg.cc/x16p0b3S/Survived_100_days_in_prison_final.png" },
-       { id: "c2", title: "Survival Thriller", category: "Cinematic", image: "https://i.postimg.cc/cLvtzhQG/Survived-100-days-in-forest-(1).png" }
+       { id: "c1", title: "The Narrative Engine", category: "Cinematic", image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770472956/Survived_100_days_in_prison_xz88gp.webp" },
+       { id: "c2", title: "Survival Thriller", category: "Cinematic", image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770472984/Survived_100_days_in_forest_a9vmlg.webp" }
     ]
   },
   {
@@ -39,11 +38,11 @@ const ARCHIVE = [
     icon: <TrendingUp className="w-4 h-4 text-emerald-500" />,
     gridClass: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
     items: [
-       { id: "f1", title: "AI Labor Crisis", category: "Finance", image: "https://i.postimg.cc/SR5YQzhZ/Will-AI-take-all-the-jobs.png" },
-       { id: "f2", title: "Scale to $1M", category: "Finance", image: "https://i.postimg.cc/bN7SKbLd/Make-a-buisness-of-1M-using-AI.png" },
-       { id: "f3", title: "$10k/Month Blueprint", category: "Finance", image: "https://i.postimg.cc/wvj1hkTg/Make-10-000-per-month-using-AI.png" },
-       { id: "f4", title: "Gemini Income Strat", category: "Finance", image: "https://i.postimg.cc/wxP1mLKY/Make-100-per-day-using-Gemini.png" },
-       { id: "f5", title: "Lock In Effect", category: "Finance", image: "https://i.postimg.cc/x8FMk4K7/I-locked-in-until-i-made.png" }
+       { id: "f1", title: "AI Labor Crisis", category: "Finance", image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770473018/Will_AI_take_all_the_jobs.._uh1g2u.webp" },
+       { id: "f2", title: "Scale to $1M", category: "Finance", image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770473030/Make_a_buisness_of_1M_using_AI_uccsfl.webp" },
+       { id: "f3", title: "$10k/Month Blueprint", category: "Finance", image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770472960/Make_10_000_per_month_using_AI_zgnxoa.webp" },
+       { id: "f4", title: "Gemini Income Strat", category: "Finance", image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770473010/Make_100_per_day_using_Gemini_ckdgaf.webp" },
+       { id: "f5", title: "Lock In Effect", category: "Finance", image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770472947/I_locked_in_until_i_made.._cnkyqk.webp" }
     ]
   }
 ];
@@ -52,29 +51,6 @@ const ThumbnailItem = ({ thumb, onClick }: { thumb: any, onClick: () => void }) 
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(false);
     
-    // OPTIMIZATION: Use a smaller width (640px) and slightly lower quality (80) for grid view
-    // This is significantly faster than loading the 1200px+ original
-    const [currentSrc, setCurrentSrc] = useState(optimizeImage(thumb.image, 640, 80));
-    const imgRef = useRef<HTMLImageElement>(null);
-
-    useEffect(() => {
-        if (imgRef.current && imgRef.current.complete) {
-            setLoaded(true);
-        }
-    }, []);
-
-    const handleError = () => {
-        // If optimization fails, fallback to original
-        if (currentSrc !== thumb.image) {
-            console.warn(`Optimization failed for ${thumb.title}, falling back to original.`);
-            setCurrentSrc(thumb.image);
-            setLoaded(false); 
-        } else {
-            setError(true);
-            setLoaded(true);
-        }
-    };
-
     return (
         <TiltCard className="group relative aspect-video rounded-xl overflow-hidden cursor-pointer border border-white/5 hover:border-cyan-500/50 bg-zinc-900 shadow-2xl transition-all duration-300">
             <div onClick={onClick} className="w-full h-full relative">
@@ -95,14 +71,13 @@ const ThumbnailItem = ({ thumb, onClick }: { thumb: any, onClick: () => void }) 
               
               {/* Thumbnail Image */}
               <img 
-                ref={imgRef}
-                src={currentSrc} 
+                src={thumb.image} 
                 alt={thumb.title}
                 className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${loaded ? 'opacity-100' : 'opacity-0'}`}
                 loading="lazy"
                 decoding="async"
                 onLoad={() => setLoaded(true)}
-                onError={handleError}
+                onError={() => { setError(true); setLoaded(true); }}
               />
               
               {/* Overlay Content */}
@@ -132,8 +107,6 @@ const ThumbnailItem = ({ thumb, onClick }: { thumb: any, onClick: () => void }) 
 };
 
 const Lightbox = ({ image, onClose }: { image: string, onClose: () => void }) => {
-    // Lightbox: Still use high resolution (2000px) for best quality when zoomed in
-    const [currentSrc, setCurrentSrc] = useState(optimizeImage(image, 2000, 90));
     const [error, setError] = useState(false);
 
     return (
@@ -155,17 +128,11 @@ const Lightbox = ({ image, onClose }: { image: string, onClose: () => void }) =>
               </div>
           ) : (
               <img 
-                src={currentSrc} 
+                src={image} 
                 alt="Thumbnail Preview" 
                 className="max-w-full max-h-[85vh] rounded-lg shadow-2xl ring-1 ring-white/10 object-contain"
                 onClick={(e) => e.stopPropagation()}
-                onError={() => {
-                    if (currentSrc !== image) {
-                        setCurrentSrc(image);
-                    } else {
-                        setError(true);
-                    }
-                }}
+                onError={() => setError(true)}
               />
           )}
         </div>

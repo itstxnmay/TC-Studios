@@ -1,44 +1,44 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { TrendingUp, ArrowUpRight, DollarSign, Cpu, ChartBar, Wallet, X, Loader2, ImageOff } from 'lucide-react';
-import { optimizeImage } from '../../utils/imageUtils';
 
 const FinanceSection = () => {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
+    // RESTORED: User's original PostImage portfolio links
     const thumbnails = [
         {
             id: 1,
             title: "The AI Labor Crisis",
             category: "Future Tech",
-            image: "https://i.postimg.cc/SR5YQzhZ/Will-AI-take-all-the-jobs.png",
+            image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770473018/Will_AI_take_all_the_jobs.._uh1g2u.webp",
             icon: <Cpu className="w-4 h-4" />
         },
         {
             id: 2,
             title: "Scale to $1M",
             category: "Entrepreneurship",
-            image: "https://i.postimg.cc/bN7SKbLd/Make-a-buisness-of-1M-using-AI.png",
+            image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770473030/Make_a_buisness_of_1M_using_AI_uccsfl.webp",
             icon: <TrendingUp className="w-4 h-4" />
         },
         {
             id: 3,
             title: "$10k/Month Blueprint",
             category: "Side Hustle",
-            image: "https://i.postimg.cc/wvj1hkTg/Make-10-000-per-month-using-AI.png",
+            image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770472960/Make_10_000_per_month_using_AI_zgnxoa.webp",
             icon: <DollarSign className="w-4 h-4" />
         },
         {
             id: 4,
             title: "Gemini Income Strat",
             category: "AI Tools",
-            image: "https://i.postimg.cc/wxP1mLKY/Make-100-per-day-using-Gemini.png",
+            image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770473010/Make_100_per_day_using_Gemini_ckdgaf.webp",
             icon: <Wallet className="w-4 h-4" />
         },
         {
             id: 5,
             title: "The 'Lock In' Effect",
             category: "Mindset",
-            image: "https://i.postimg.cc/x8FMk4K7/I-locked-in-until-i-made.png",
+            image: "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770472947/I_locked_in_until_i_made.._cnkyqk.webp",
             icon: <ChartBar className="w-4 h-4" />
         }
     ];
@@ -46,10 +46,6 @@ const FinanceSection = () => {
     const Card = ({ item, isLarge = false }: { item: typeof thumbnails[0], isLarge?: boolean }) => {
         const [loaded, setLoaded] = useState(false);
         const [error, setError] = useState(false);
-        
-        // OPTIMIZATION: Reduced width to 800 for large card, 600 for small cards. 
-        // Previously loading 1600/1200px.
-        const [currentSrc, setCurrentSrc] = useState(optimizeImage(item.image, isLarge ? 800 : 600, 85));
         const imgRef = useRef<HTMLImageElement>(null);
         
         useEffect(() => {
@@ -57,16 +53,6 @@ const FinanceSection = () => {
                 setLoaded(true);
             }
         }, []);
-
-        const handleError = () => {
-            if (currentSrc !== item.image) {
-                setCurrentSrc(item.image);
-                setLoaded(false);
-            } else {
-                setError(true);
-                setLoaded(true);
-            }
-        };
 
         return (
             <div 
@@ -86,16 +72,15 @@ const FinanceSection = () => {
                     )}
                     <img 
                         ref={imgRef}
-                        src={currentSrc} 
+                        src={item.image} 
                         alt={item.title}
                         onLoad={() => setLoaded(true)}
-                        onError={handleError}
+                        onError={() => { setError(true); setLoaded(true); }}
                         className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-105 will-change-transform ${loaded ? 'opacity-100' : 'opacity-0'}`}
                     />
                 </div>
 
                 {/* Hover Overlay Gradient */}
-                {/* Mobile: Opacity 100, Desktop: Opacity 0 (hover 100) */}
                 <div className="absolute inset-0 transition-opacity duration-300 flex flex-col justify-end p-4 md:p-6 z-20
                     opacity-100 bg-gradient-to-t from-black/90 via-black/40 to-transparent
                     md:opacity-0 md:group-hover:opacity-100"
@@ -122,8 +107,6 @@ const FinanceSection = () => {
     };
 
     const Lightbox = ({ image, onClose }: { image: string, onClose: () => void }) => {
-        // Lightbox: Still use High Res (2000px)
-        const [currentSrc, setCurrentSrc] = useState(optimizeImage(image, 2000, 95));
         const [error, setError] = useState(false);
         
         return (
@@ -148,17 +131,11 @@ const FinanceSection = () => {
                     </div>
                 ) : (
                     <img 
-                        src={currentSrc} 
+                        src={image} 
                         alt="Thumbnail Preview" 
                         className="max-w-full max-h-[85vh] rounded-lg shadow-2xl ring-1 ring-white/10 object-contain"
                         onClick={(e) => e.stopPropagation()}
-                        onError={() => {
-                            if (currentSrc !== image) {
-                                setCurrentSrc(image);
-                            } else {
-                                setError(true);
-                            }
-                        }}
+                        onError={() => setError(true)}
                     />
                 )}
             </div>

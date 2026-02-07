@@ -1,28 +1,35 @@
 import React from 'react';
 import ComparisonSlider from '../ui/ComparisonSlider';
 import { Film, Aperture, TrendingUp, Palette, Layers, MousePointer2, ChartPie, Target, Brain, Zap, ScanFace, ChartLine } from 'lucide-react';
-// Note: We do NOT import optimizeImage here anymore, we pass raw URLs to ComparisonSlider which handles optimization + fallback internally.
 
 const DocumentarySection = () => {
   // ==================================================================================
-  // IMAGE ASSETS (Raw URLs)
+  // IMAGE ASSETS (RESTORED USER PORTFOLIO)
   // ==================================================================================
   
   // Case 1: Starbucks
-  const starbucksBefore = "https://i.postimg.cc/cJgpGLYQ/Low-Budget-Thumbnail.jpg"; 
-  const starbucksAfter = "https://i.postimg.cc/sxQQpSZc/Starbucks-Truth.png"; 
+  // Before: Generic Coffee (Stock - Placeholder for "Amateur")
+  const starbucksBefore = "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770474324/Low_Budget_Thumbnail_hxvnvt.jpg"; 
+  // After: User's Original Work
+  const starbucksAfter = "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770472822/Starbucks_Truth_ncan8t.webp"; 
 
   // Case 2: Coca Cola
-  const cokeBefore = "https://i.postimg.cc/W15dHTcH/coca-cola-low-budget-thumbnail.jpg";
-  const cokeAfter = "https://i.postimg.cc/XNkw4MfB/The-Dark-truth-of-Cocacola.png";
+  // Before: Generic Can (Stock - Placeholder for "Amateur")
+  const cokeBefore = "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770474326/coca_cola_low_budget_thumbnail_pr2pq0.jpg";
+  // After: User's Original Work
+  const cokeAfter = "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770473018/The_Dark_truth_of_Cocacola_q9n42w.webp";
 
   // Case 3: Stock Market
-  const stockBefore = "https://i.postimg.cc/4y18Cm54/stock-market-trap-low-budget-thumbnail.jpg";
-  const stockAfter = "https://i.postimg.cc/LsTh1SN1/Dark-truth-about-Stock-Market.png";
+  // Before: Generic Graph (Stock - Placeholder for "Amateur")
+  const stockBefore = "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770474328/stock_market_trap_low_budget_thumbnail_uistm0.jpg";
+  // After: User's Original Work
+  const stockAfter = "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770472910/Dark_truth_about_Stock_Market_le7kxj.webp";
 
   // Case 4: Brain Rot
-  const brainRotBefore = "https://i.postimg.cc/brCS7hKm/brain-rot-low-budget-thumbnail-image.jpg";
-  const brainRotAfter = "https://i.postimg.cc/dtCqPvPr/Why-you-are-stuck.jpg";
+  // Before: Generic Phone (Stock - Placeholder for "Amateur")
+  const brainRotBefore = "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770474316/brain_rot_low_budget_thumbnail_image_c9fmw0.jpg";
+  // After: User's Original Work
+  const brainRotAfter = "https://res.cloudinary.com/dgbnitsvw/image/upload/v1770473030/Why_you_are_stuck_pxhxc6.webp";
 
   return (
     <div className="w-full relative py-20 border-b border-white/5">
