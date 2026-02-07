@@ -71,7 +71,7 @@ const BrandMarquee = () => {
       {/* --- URGENCY CTA --- */}
       <div className="flex justify-center relative z-30 mt-4">
         <a 
-          href="#contact" 
+          href="#pricing" 
           className="group relative flex items-center gap-3 px-6 py-2.5 bg-red-950/20 border border-red-500/30 rounded-full hover:bg-red-900/30 transition-all duration-300 hover:scale-105 hover:border-red-500/50 shadow-[0_0_20px_rgba(220,38,38,0.1)] hover:shadow-[0_0_30px_rgba(220,38,38,0.3)]"
         >
             <span className="relative flex h-2 w-2">
