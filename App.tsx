@@ -8,6 +8,7 @@ import About from './components/About';
 import Contact from './components/Contact';
 import GlobalBackground from './components/GlobalBackground';
 import SideContactButton from './components/ui/SideContactButton';
+import BrandMarquee from './components/BrandMarquee';
 import { useScrollReveal } from './hooks/useAppHooks';
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
       <SideContactButton />
       
       <Hero />
+      <BrandMarquee />
       <Thumbnails />
       <Pricing />
       <Portfolio />
@@ -33,6 +35,18 @@ const App = () => {
         /* --- UTILITIES --- */
         .will-change-transform {
           will-change: transform;
+        }
+
+        /* --- MARQUEE ANIMATION --- */
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          animation: marquee 60s linear infinite;
+        }
+        .animate-marquee-reverse {
+          animation: marquee 60s linear infinite reverse;
         }
 
         /* --- SKELETON LOADER --- */
